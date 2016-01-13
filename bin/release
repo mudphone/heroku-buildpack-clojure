@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# copy phoenix buildpack's release script
+# from https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
+
+cat <<EOF
+---
+addons:
+  - heroku-postgresql:hobby-dev
+default_process_types:
+  web: mix phoenix.server
+EOF
