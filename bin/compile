@@ -5,7 +5,7 @@
 set -e
 
 # parse args
-export BUILD_DIR=$1
+export BUILD_DIR=$1/cljs
 export CACHE_DIR=$2
 export ENV_DIR=$3
 
