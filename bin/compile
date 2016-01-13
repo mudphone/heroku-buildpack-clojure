@@ -24,9 +24,6 @@ curl --retry 3 --silent --location $JVM_COMMON_BUILDPACK | tar xzm -C /tmp/jvm-c
 . /tmp/jvm-common/bin/java
 install_java_with_overlay ${BUILD_DIR}
 
-# Install Node.js if needed
-detect_and_install_nodejs ${BUILD_DIR}
-
 # Determine Leiningen version
 if [ "$(grep ":min-lein-version[[:space:]]\+\"2" $BUILD_DIR/project.clj)" != "" ]; then
   LEIN_VERSION="2.5.3"
@@ -133,13 +130,6 @@ if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build."
   exit 1
 fi
-
-# populate profile.d
-PROFILE_PATH="$BUILD_DIR/.profile.d/clojure.sh"
-mkdir -p $(dirname $PROFILE_PATH)
-echo "export LEIN_NO_DEV=\"\${LEIN_NO_DEV:-yes}\"" >> $PROFILE_PATH
-echo 'export PATH="$HOME/.heroku/nodejs/bin:$HOME/.jdk/bin:$HOME/.lein/bin:$PATH"' >> $PROFILE_PATH
-echo 'export RING_ENV="${RING_ENV:-production}"' >> $PROFILE_PATH
 
 # repack cache with new assets
 mkdir -p $CACHE_DIR
