@@ -1,3 +1,2 @@
 -#!/usr/bin/env bash
-export BUILD_DIR=$1/cljs
-cd ${BUILD_DIR} && lein do cljsbuild once prod
+lein do cljsbuild once prod
